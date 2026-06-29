@@ -1,0 +1,55 @@
+/* =======================================
+   ASCEND GLASS SYSTEM
+======================================= */
+
+.glass {
+
+  background: rgba(255,255,255,.06);
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  box-shadow: var(--shadow-glass);
+
+}
+
+.glass-soft {
+
+  background: rgba(255,255,255,.03);
+
+  backdrop-filter: blur(12px);
+
+}
+
+.glass-heavy {
+
+  background: rgba(255,255,255,.12);
+
+  backdrop-filter: blur(28px);
+
+}
+
+.glass-card {
+
+  border-radius: var(--radius-xl);
+
+  padding: var(--space-5);
+
+}
+
+.glass-sidebar {
+
+  width:280px;
+
+  min-height:100vh;
+
+}
+
+.glass-navbar {
+
+  height:72px;
+
+}

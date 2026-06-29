@@ -1,0 +1,57 @@
+/* =======================================
+   UTILITIES
+======================================= */
+
+.surface{
+
+background:
+
+rgb(var(--card));
+
+}
+
+.border-default{
+
+border:
+
+1px solid rgb(var(--border));
+
+}
+
+.rounded-default{
+
+border-radius:
+
+var(--radius-lg);
+
+}
+
+.flex-center{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.page-container{
+
+width:min(1500px,95%);
+
+margin-inline:auto;
+
+}
+
+.dashboard-grid{
+
+display:grid;
+
+gap:24px;
+
+grid-template-columns:
+
+repeat(12,1fr);
+
+}

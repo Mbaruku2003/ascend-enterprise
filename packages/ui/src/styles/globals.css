@@ -1,0 +1,83 @@
+@import "./theme.css";
+@import "./fonts.css";
+
+@import "./glass.css";
+@import "./animations.css";
+@import "./motion.css";
+@import "./effects.css";
+@import "./utilities.css";
+@import "./theme.css";
+@import "./fonts.css";
+
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+    -webkit-font-smoothing:antialiased;
+
+}
+
+body{
+
+    margin:0;
+
+    background:rgb(var(--background));
+
+    color:rgb(var(--foreground));
+
+    font-family:var(--font-sans);
+
+    line-height:1.6;
+
+}
+
+button{
+
+    font:inherit;
+
+}
+
+input{
+
+    font:inherit;
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+::selection{
+
+    background:rgb(var(--primary));
+
+    color:white;
+
+}
+
+:focus-visible{
+
+    outline:none;
+
+    box-shadow:
+      0 0 0 3px rgba(91,95,239,.4);
+
+}

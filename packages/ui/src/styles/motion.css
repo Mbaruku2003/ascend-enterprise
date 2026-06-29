@@ -1,0 +1,47 @@
+.fade-in{
+
+    animation:
+
+        fade-in
+
+        .4s
+
+        ease;
+
+}
+
+.slide-up{
+
+    animation:
+
+        slide-up
+
+        .45s
+
+        ease;
+
+}
+
+.slide-left{
+
+    animation:
+
+        slide-left
+
+        .45s
+
+        ease;
+
+}
+
+.scale-in{
+
+    animation:
+
+        scale-in
+
+        .35s
+
+        ease;
+
+}
