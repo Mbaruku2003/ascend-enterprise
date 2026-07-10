@@ -4,7 +4,17 @@
  * FormField Types
  * ============================================================================
  *
- * High-level form field molecule that composes the shared Field infrastructure.
+ * High-level form field molecule responsible for layout and composition.
+ *
+ * Responsibilities:
+ * - Header
+ * - Footer
+ * - Actions
+ * - Responsive layout
+ * - Spacing
+ *
+ * Delegates accessibility, IDs, validation and messaging to the shared
+ * Field infrastructure.
  *
  * ============================================================================
  */
@@ -37,6 +47,15 @@ export type FormFieldLabelAlignment =
   | "end";
 
 /* -------------------------------------------------------------------------- */
+/* Spacing                                                                    */
+/* -------------------------------------------------------------------------- */
+
+export type FormFieldSpacing =
+  | "sm"
+  | "md"
+  | "lg";
+
+/* -------------------------------------------------------------------------- */
 /* Props                                                                      */
 /* -------------------------------------------------------------------------- */
 
@@ -45,7 +64,7 @@ export interface FormFieldProps
   /**
    * Form control.
    *
-   * Typically:
+   * Examples:
    * - Input
    * - Textarea
    * - Select
@@ -56,7 +75,7 @@ export interface FormFieldProps
   children: ReactElement;
 
   /**
-   * Optional field description rendered
+   * Optional description rendered
    * before helper/error text.
    */
   description?: ReactNode;
@@ -64,15 +83,16 @@ export interface FormFieldProps
   /**
    * Optional secondary action.
    *
-   * Example:
-   * - "Forgot password?"
-   * - "Change"
+   * Examples:
+   * - Forgot password?
+   * - Change
+   * - Verify
    * - Help button
    */
   action?: ReactNode;
 
   /**
-   * Field layout.
+   * Layout mode.
    *
    * @default "vertical"
    */
@@ -81,27 +101,30 @@ export interface FormFieldProps
   /**
    * Label alignment.
    *
+   * Only applies to layouts where the
+   * label is positioned separately.
+   *
    * @default "start"
    */
   labelAlignment?: FormFieldLabelAlignment;
 
   /**
-   * Hide the label visually while keeping it
-   * available to assistive technologies.
+   * Vertical spacing between the field
+   * sections.
    *
-   * @default false
+   * @default "md"
    */
-  hideLabel?: boolean;
+  spacing?: FormFieldSpacing;
 
   /**
-   * Optional header content rendered
-   * above the control.
+   * Optional content rendered above
+   * the field.
    */
   header?: ReactNode;
 
   /**
-   * Optional footer content rendered
-   * below helper/error text.
+   * Optional content rendered below
+   * the helper/error text.
    */
   footer?: ReactNode;
 }
@@ -115,7 +138,7 @@ export interface FormFieldOwnerState {
 
   labelAlignment: FormFieldLabelAlignment;
 
-  hideLabel: boolean;
+  spacing: FormFieldSpacing;
 
   disabled: boolean;
 
