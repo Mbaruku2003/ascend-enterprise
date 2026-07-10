@@ -131,3 +131,41 @@ export const SURFACE_INTERACTIVE_CLASS =
     "focus-visible:outline-none",
     "focus-visible:ring-2",
   ].join(" ");
+
+export function resolveSurfaceClasses({
+  variant,
+  elevation,
+  radius,
+  padding,
+  interactive,
+}: {
+  variant: SurfaceVariant;
+  elevation: SurfaceElevation;
+  radius: SurfaceRadius;
+  padding: SurfacePadding;
+  interactive: boolean;
+}) {
+  return [
+    SURFACE_ROOT_CLASS,
+
+    SURFACE_VARIANT_CLASSES[
+      variant
+    ],
+
+    SURFACE_ELEVATION_CLASSES[
+      elevation
+    ],
+
+    SURFACE_RADIUS_CLASSES[
+      radius
+    ],
+
+    SURFACE_PADDING_CLASSES[
+      padding
+    ],
+
+    interactive
+      ? SURFACE_INTERACTIVE_CLASS
+      : "",
+  ];
+}
