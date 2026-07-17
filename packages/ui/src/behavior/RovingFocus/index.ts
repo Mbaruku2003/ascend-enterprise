@@ -18,3 +18,5 @@ export * from "./useRovingFocus";
 export * from "./roving-focus.utils";
 
 export * from "./RovingFocusItem";
+
+export * from "./keyboard";

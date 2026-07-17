@@ -1,52 +1,98 @@
 /**
  * ============================================================================
- * Ascend UI
- * Dismissable Layer Context
+ * Ascend Enterprise UI
+ * Dismissable Layer
+ * ----------------------------------------------------------------------------
+ * File: DismissableLayerContext.tsx
+ *
+ * Compatibility layer.
+ *
+ * Historically DismissableLayer managed its own layer stack through this
+ * context. The Overlay Engine is now the single source of truth.
+ *
+ * This provider exists only to avoid breaking older components while they are
+ * migrated to useDismissableLayer().
+ *
+ * New code should NOT depend on this context.
  * ============================================================================
  */
 
 import {
     createContext,
-    useCallback,
     useContext,
     useMemo,
-    useState,
     type ReactNode,
 } from "react";
 
+import {
+    useOverlay,
+} from "@/atoms/shared/Overlay/_internal";
+
+/* -------------------------------------------------------------------------- */
+/* Context                                                                    */
+/* -------------------------------------------------------------------------- */
+
 export interface DismissableLayerContextValue {
 
+    /**
+     * @deprecated
+     * Registration is now handled automatically by useDismissableLayer().
+     */
     registerLayer(
         element: HTMLElement,
     ): void;
 
+    /**
+     * @deprecated
+     * Registration is now handled automatically by useDismissableLayer().
+     */
     unregisterLayer(
         element: HTMLElement,
     ): void;
 
+    /**
+     * Returns true if the supplied element represents the current
+     * top-most overlay.
+     */
     isTopLayer(
         element: HTMLElement,
     ): boolean;
 
+    /**
+     * Returns the current top-most overlay element.
+     */
     getTopLayer():
         | HTMLElement
         | undefined;
 
-    readonly layers: readonly HTMLElement[];
-
+    /**
+     * Number of registered overlays.
+     */
     readonly layerCount: number;
 
-    disableOutsidePointerEvents: boolean;
+    /**
+     * Pointer-event disabling is now managed by Overlay Runtime.
+     */
+    readonly disableOutsidePointerEvents: boolean;
 
+    /**
+     * @deprecated
+     * No-op. Managed by ScrollLockManager / PointerManager.
+     */
     setDisableOutsidePointerEvents(
         value: boolean,
     ): void;
+
 }
 
 const DismissableLayerContext =
     createContext<
         DismissableLayerContextValue | undefined
     >(undefined);
+
+/* -------------------------------------------------------------------------- */
+/* Provider                                                                   */
+/* -------------------------------------------------------------------------- */
 
 export function DismissableLayerProvider({
 
@@ -58,137 +104,66 @@ export function DismissableLayerProvider({
 
 }) {
 
-    const [
+    const {
 
-        layers,
+        overlays,
 
-        setLayers,
+        topOverlay,
 
-    ] =
-        useState<
-            HTMLElement[]
-        >([]);
-
-    const [
-
-        disableOutsidePointerEvents,
-
-        setDisableOutsidePointerEvents,
-
-    ] =
-        useState(false);
-
-    const registerLayer =
-        useCallback(
-
-            (
-                element: HTMLElement,
-            ) => {
-
-                setLayers(
-                    previous => {
-
-                        if (
-                            previous.includes(
-                                element,
-                            )
-                        ) {
-                            return previous;
-                        }
-
-                        return [
-                            ...previous,
-                            element,
-                        ];
-
-                    },
-                );
-
-            },
-
-            [],
-        );
-
-    const unregisterLayer =
-        useCallback(
-
-            (
-                element: HTMLElement,
-            ) => {
-
-                setLayers(
-                    previous =>
-                        previous.filter(
-                            layer =>
-                                layer !==
-                                element,
-                        ),
-                );
-
-            },
-
-            [],
-        );
-
-    const getTopLayer =
-        useCallback(
-            () =>
-                layers[
-                    layers.length - 1
-                ],
-            [layers],
-        );
-
-    const isTopLayer =
-        useCallback(
-
-            (
-                element: HTMLElement,
-            ) =>
-                getTopLayer() ===
-                element,
-
-            [getTopLayer],
-        );
+    } = useOverlay();
 
     const value =
-        useMemo(
-            () => ({
+        useMemo<DismissableLayerContextValue>(() => ({
 
-                registerLayer,
+            registerLayer() {
 
-                unregisterLayer,
+                /**
+                 * Compatibility no-op.
+                 * Registration is handled by OverlayController.
+                 */
 
-                getTopLayer,
+            },
 
-                isTopLayer,
+            unregisterLayer() {
 
-                layers,
+                /**
+                 * Compatibility no-op.
+                 */
 
-                layerCount:
-                    layers.length,
+            },
 
-                disableOutsidePointerEvents,
+            isTopLayer(element) {
 
-                setDisableOutsidePointerEvents,
+                return (
+                    topOverlay?.element === element
+                );
 
-            }),
-            [
+            },
 
-                registerLayer,
+            getTopLayer() {
 
-                unregisterLayer,
+                return topOverlay?.element;
 
-                getTopLayer,
+            },
 
-                isTopLayer,
+            layerCount: overlays.length,
 
-                layers,
+            disableOutsidePointerEvents: false,
 
-                disableOutsidePointerEvents,
+            setDisableOutsidePointerEvents() {
 
-            ],
-        );
+                /**
+                 * Runtime-managed.
+                 */
+
+            },
+
+        }), [
+
+            overlays,
+            topOverlay,
+
+        ]);
 
     return (
 
@@ -204,6 +179,10 @@ export function DismissableLayerProvider({
 
 }
 
+/* -------------------------------------------------------------------------- */
+/* Hook                                                                       */
+/* -------------------------------------------------------------------------- */
+
 export function useDismissableLayerContext() {
 
     const context =
@@ -214,7 +193,9 @@ export function useDismissableLayerContext() {
     if (!context) {
 
         throw new Error(
-            "DismissableLayer must be inside DismissableLayerProvider.",
+
+            "DismissableLayer must be used inside DismissableLayerProvider.",
+
         );
 
     }

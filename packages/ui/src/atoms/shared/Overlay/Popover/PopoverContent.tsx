@@ -1,143 +1,124 @@
 /**
  * ============================================================================
- * Ascend UI
+ * Ascend Enterprise UI
  * Popover Content
  * ============================================================================
  */
 
 import {
-
-forwardRef,
-
-type HTMLAttributes,
-
+    forwardRef,
+    type HTMLAttributes,
 } from "react";
 
 import {
-
-cn,
-
+    cn,
 } from "@/utils";
 
 import {
-
-useMergedRefs,
-
+    useMergedRefs,
 } from "@/hooks";
 
 import {
+    useFloatingPosition,
+} from "@/atoms/shared/Overlay/positioning";
 
-usePopoverContext,
-
+import {
+    usePopoverContext,
 } from "./PopoverContext";
 
 export interface PopoverContentProps
-extends HTMLAttributes<HTMLDivElement> {}
+    extends HTMLAttributes<HTMLDivElement> {}
 
-export const PopoverContent =
-forwardRef<
-HTMLDivElement,
-PopoverContentProps
->(
+export const PopoverContent = forwardRef<
+    HTMLDivElement,
+    PopoverContentProps
+>(function PopoverContent(
 
-(
-{
-className,
-style,
-children,
-...props
-},
-forwardedRef,
-) => {
+    {
+        className,
+        style,
+        children,
+        ...props
+    },
 
-const {
+    forwardedRef,
 
-contentRef,
+) {
 
-anchorRef,
+    const {
 
-placement,
+        anchorRef,
 
-offset,
+        contentRef,
 
-} =
-usePopoverContext();
+        placement,
 
-const ref =
-useMergedRefs(
+        offset,
 
-forwardedRef,
+    } = usePopoverContext();
 
-contentRef,
+    const ref =
+        useMergedRefs(
 
-);
+            forwardedRef,
 
-const anchor =
-anchorRef.current;
+            contentRef,
 
-const anchorRect =
-anchor?.getBoundingClientRect();
+        );
 
-const positionStyle = anchorRect
-? {
-position: "fixed" as const,
+    const {
 
-top:
-placement.startsWith("bottom")
-? anchorRect.bottom + offset
-: placement.startsWith("top")
-? anchorRect.top - offset
-: anchorRect.top,
+        style: floatingStyle,
 
-left:
-placement.startsWith("right")
-? anchorRect.right + offset
-: placement.startsWith("left")
-? anchorRect.left - offset
-: anchorRect.left,
+    } = useFloatingPosition({
 
-}
-: {};
+        anchorRef,
 
-return (
+        floatingRef: contentRef,
 
-<div
+        placement,
 
-ref={ref}
+        offset,
 
-role="dialog"
+    });
 
-className={cn(
+    return (
 
-"z-50 min-w-[12rem] rounded-lg border bg-background shadow-lg outline-none",
+        <div
 
-className,
+            ref={ref}
 
-)}
+            role="dialog"
 
-style={{
+            className={cn(
 
-...positionStyle,
+                "z-50 min-w-[12rem] rounded-lg border bg-background shadow-lg outline-none",
 
-...style,
+                className,
 
-}}
+            )}
 
-{...props}
+            style={{
 
->
+                ...floatingStyle,
 
-{children}
+                ...style,
 
-</div>
+            }}
 
-);
+            {...props}
 
-},
+        >
 
-);
+            {children}
+
+        </div>
+
+    );
+
+});
 
 PopoverContent.displayName =
-"PopoverContent";
+    "PopoverContent";
 
 export default PopoverContent;
