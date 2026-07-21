@@ -7,8 +7,8 @@
 
 export {
     default,
-} from "../Menu/MenuRadioGroup";
+} from "../../Navigation/Menu/MenuRadioGroup";
 
 export type {
     MenuRadioGroupProps as DropdownMenuRadioGroupProps,
-} from "../Menu";
+} from "../../Navigation/Menu";

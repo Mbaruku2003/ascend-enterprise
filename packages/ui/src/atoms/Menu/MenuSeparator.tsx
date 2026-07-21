@@ -4,67 +4,54 @@
  * Menu
  * ----------------------------------------------------------------------------
  * File: MenuSeparator.tsx
+ *
+ * Thin wrapper around the shared ListSeparator primitive.
+ *
  * ============================================================================
  */
 
 import {
     forwardRef,
-    type HTMLAttributes,
+} from "react";
+
+import type {
+    ComponentPropsWithoutRef,
 } from "react";
 
 import {
-    cn,
-} from "@/utils";
+    ListSeparator,
+} from "../List";
 
 export interface MenuSeparatorProps
-    extends HTMLAttributes<HTMLDivElement> {}
+    extends ComponentPropsWithoutRef<
+        typeof ListSeparator
+    > {}
 
-export const MenuSeparator = forwardRef<
-    HTMLDivElement,
-    MenuSeparatorProps
->(function MenuSeparator(
+export const MenuSeparator =
+    forwardRef<
+        HTMLHRElement,
+        MenuSeparatorProps
+    >(function MenuSeparator(
 
-    {
+        props,
 
-        className,
+        ref,
 
-        ...props
+    ) {
 
-    },
+        return (
 
-    ref,
+            <ListSeparator
 
-) {
+                ref={ref}
 
-    return (
+                {...props}
 
-        <div
+            />
 
-            ref={ref}
+        );
 
-            role="separator"
-
-            aria-orientation="horizontal"
-
-            className={cn(
-
-                "my-1",
-
-                "h-px",
-
-                "bg-border",
-
-                className,
-
-            )}
-
-            {...props}
-
-        />
-
-    );
-
-});
+    });
 
 MenuSeparator.displayName =
     "MenuSeparator";

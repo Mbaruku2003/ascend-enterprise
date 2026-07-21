@@ -32,7 +32,7 @@ import {
 
 import {
     useMenuContext,
-} from "../Menu/MenuContext";
+} from "../../Navigation/Menu/MenuContext";
 
 import type {
     ContextMenuTriggerProps,

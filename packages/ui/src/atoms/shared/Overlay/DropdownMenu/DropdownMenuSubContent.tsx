@@ -7,4 +7,4 @@
 
 export {
     default,
-} from "../Menu/MenuSubContent";
+} from "../../Navigation/Menu/MenuSubContent";

@@ -4,83 +4,56 @@
  * Menu
  * ----------------------------------------------------------------------------
  * File: MenuLabel.tsx
+ *
+ * Thin wrapper around the shared ListLabel primitive.
+ *
  * ============================================================================
  */
 
 import {
     forwardRef,
-    type HTMLAttributes,
+} from "react";
+
+import type {
+    ComponentPropsWithoutRef,
 } from "react";
 
 import {
-    cn,
-} from "@/utils";
+    ListLabel,
+} from "../List";
 
 export interface MenuLabelProps
-    extends HTMLAttributes<HTMLDivElement> {
-
-    inset?: boolean;
-
-}
+    extends ComponentPropsWithoutRef<
+        typeof ListLabel
+    > {}
 
 export const MenuLabel =
-forwardRef<
-HTMLDivElement,
-MenuLabelProps
->(
+    forwardRef<
+        HTMLDivElement,
+        MenuLabelProps
+    >(function MenuLabel(
 
-function MenuLabel(
+        props,
 
-{
+        ref,
 
-className,
+    ) {
 
-inset,
+        return (
 
-...props
+            <ListLabel
 
-},
+                ref={ref}
 
-ref,
+                {...props}
 
-) {
+            />
 
-return (
+        );
 
-<div
-
-ref={ref}
-
-className={cn(
-
-"px-2",
-
-"py-1.5",
-
-"text-xs",
-
-"font-semibold",
-
-"text-muted-foreground",
-
-inset &&
-"pl-8",
-
-className,
-
-)}
-
-{...props}
-
-/>
-
-);
-
-},
-
-);
+    });
 
 MenuLabel.displayName =
-"MenuLabel";
+    "MenuLabel";
 
 export default MenuLabel;

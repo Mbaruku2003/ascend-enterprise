@@ -32,7 +32,9 @@ import type {
 
 import type {
     CommandCollection,
+    CommandCollectionItem,
 } from "./CommandCollection";
+
 
 /* -------------------------------------------------------------------------- */
 /* Command Item                                                               */
@@ -309,6 +311,14 @@ export interface CommandContextValue {
      */
     collection: CommandCollection;
 
+    /**
+     * Filtered command items.
+     *
+     * Derived from:
+     * collection.search(search)
+     */
+    filteredItems: readonly CommandCollectionItem[];
+
     /* ---------------------------------------------------------------------- */
     /* State                                                                  */
     /* ---------------------------------------------------------------------- */
@@ -342,37 +352,22 @@ export interface CommandContextValue {
     /* State Setters                                                          */
     /* ---------------------------------------------------------------------- */
 
-    /**
-     * Set open state.
-     */
     setOpen(
         open: boolean,
     ): void;
 
-    /**
-     * Set loading state.
-     */
     setLoading(
         loading: boolean,
     ): void;
 
-    /**
-     * Update search query.
-     */
     setSearch(
         value: string,
     ): void;
 
-    /**
-     * Update selected command.
-     */
     setSelected(
         value?: string,
     ): void;
 
-    /**
-     * Update active navigation index.
-     */
     setActiveIndex(
         index: number,
     ): void;
@@ -382,7 +377,7 @@ export interface CommandContextValue {
     /* ---------------------------------------------------------------------- */
 
     /**
-     * Clears the current search and selection.
+     * Clears search and selection.
      */
     clear(): void;
 

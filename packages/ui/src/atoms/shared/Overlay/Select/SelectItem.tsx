@@ -9,27 +9,24 @@
 
 import {
     forwardRef,
-    type HTMLAttributes,
+    useEffect,
+    type MouseEvent,
+} from "react";
+
+import type {
+    HTMLAttributes,
 } from "react";
 
 import {
-
-    cn,
-
-} from "@/utils";
+    ListItem,
+} from "../../List";
 
 import {
-
     useSelect,
-
 } from "./useSelect";
 
-import {
-    useEffect,
-} from "react";
-
 export interface SelectItemProps
-extends HTMLAttributes<HTMLDivElement> {
+    extends HTMLAttributes<HTMLDivElement> {
 
     value: string;
 
@@ -38,165 +35,125 @@ extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const SelectItem =
-forwardRef<
-HTMLDivElement,
-SelectItemProps
->(
+    forwardRef<
+        HTMLDivElement,
+        SelectItemProps
+    >(function SelectItem(
 
-function SelectItem(
-
-{
-
-    value,
-
-    disabled = false,
-
-    className,
-
-    children,
-
-    onClick,
-
-    ...props
-
-},
-
-ref,
-
-) {
-
-    const {
-
-	collection,
-
-        value: selected,
-
-        setValue,
-
-        setOpen,
-
-    } = useSelect();
-useEffect(() => {
-
-    collection.register({
-
-        value,
-
-        label: children,
-
-        disabled,
-
-    });
-
-    return () => {
-
-        collection.unregister(
+        {
 
             value,
 
-        );
+            disabled = false,
 
-    };
+            children,
 
-}, [
+            onClick,
 
-    collection,
+            ...props
 
-    value,
+        },
 
-    children,
-
-    disabled,
-
-]);
-    const selectedItem =
-        selected === value;
-
-    function handleClick(
-
-        event: React.MouseEvent<HTMLDivElement>,
+        ref,
 
     ) {
 
-        if (disabled) {
+        const {
 
-            return;
+            collection,
 
-        }
+            value: selected,
 
-        onClick?.(event);
+            setValue,
 
-        if (
+            setOpen,
 
-            event.defaultPrevented
+        } = useSelect();
+
+        useEffect(() => {
+
+            collection.register({
+
+                value,
+
+                label: children,
+
+                disabled,
+
+            });
+
+            return () => {
+
+                collection.unregister(value);
+
+            };
+
+        }, [
+
+            collection,
+
+            value,
+
+            children,
+
+            disabled,
+
+        ]);
+
+        const selectedItem =
+            selected === value;
+
+        function handleClick(
+
+            event: MouseEvent<HTMLDivElement>,
 
         ) {
 
-            return;
+            if (disabled) {
+
+                return;
+
+            }
+
+            onClick?.(event);
+
+            if (event.defaultPrevented) {
+
+                return;
+
+            }
+
+            setValue(value);
+
+            setOpen(false);
 
         }
 
-        setValue(value);
+        return (
 
-        setOpen(false);
+            <ListItem
 
-    }
+                ref={ref}
 
-    return (
+                selected={selectedItem}
 
-        <div
+                active={selectedItem}
 
-            ref={ref}
+                disabled={disabled}
 
-            role="option"
+                onClick={handleClick}
 
-            aria-selected={
-                selectedItem
-            }
+                {...props}
 
-            data-selected={
-                selectedItem
-                    ? ""
-                    : undefined
-            }
+            >
 
-            data-disabled={
-                disabled
-                    ? ""
-                    : undefined
-            }
+                {children}
 
-            className={cn(
+            </ListItem>
 
-                "flex cursor-default select-none items-center rounded-md px-3 py-2 text-sm outline-none",
+        );
 
-                "hover:bg-accent hover:text-accent-foreground",
-
-                selectedItem &&
-                    "bg-accent font-medium",
-
-                disabled &&
-                    "pointer-events-none opacity-50",
-
-                className,
-
-            )}
-
-            onClick={handleClick}
-
-            {...props}
-
-        >
-
-            {children}
-
-        </div>
-
-    );
-
-},
-
-);
+    });
 
 SelectItem.displayName =
     "SelectItem";

@@ -5,11 +5,12 @@
  * ----------------------------------------------------------------------------
  * File: CommandProvider.tsx
  *
- * Provides the shared runtime for the entire Command System.
+ * Shared runtime for the entire Command System.
  *
  * Owns:
- * • Collection
+ * • CommandCollection
  * • Search state
+ * • Filtered commands
  * • Selection
  * • Keyboard navigation
  * • Loading state
@@ -21,10 +22,6 @@ import {
     useCallback,
     useMemo,
     useState,
-} from "react";
-
-import type {
-    ReactNode,
 } from "react";
 
 import CommandContext from "./CommandContext";
@@ -105,6 +102,31 @@ export function CommandProvider({
     ] = useState(-1);
 
     /* ---------------------------------------------------------------------- */
+    /* Derived State                                                          */
+    /* ---------------------------------------------------------------------- */
+
+    const filteredItems =
+        useMemo(
+
+            () =>
+
+                collection.search(
+
+                    search,
+
+                ),
+
+            [
+
+                collection,
+
+                search,
+
+            ],
+
+        );
+
+    /* ---------------------------------------------------------------------- */
     /* Helpers                                                                */
     /* ---------------------------------------------------------------------- */
 
@@ -146,6 +168,8 @@ export function CommandProvider({
 
                 collection,
 
+                filteredItems,
+
                 /* State */
 
                 open,
@@ -158,7 +182,7 @@ export function CommandProvider({
 
                 activeIndex,
 
-                /* State Setters */
+                /* Setters */
 
                 setOpen,
 
@@ -183,6 +207,8 @@ export function CommandProvider({
             [
 
                 collection,
+
+                filteredItems,
 
                 open,
 

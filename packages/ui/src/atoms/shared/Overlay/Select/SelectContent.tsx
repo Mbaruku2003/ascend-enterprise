@@ -11,44 +11,55 @@ import {
     forwardRef,
 } from "react";
 
-import MenuContent from "../Menu/MenuContent";
-
 import type {
     HTMLAttributes,
 } from "react";
 
+import MenuContent from "../../Navigation/Menu/MenuContent";
+import { List } from "../../List";
+
 export interface SelectContentProps
-extends HTMLAttributes<HTMLDivElement> {}
+    extends HTMLAttributes<HTMLDivElement> {}
 
 export const SelectContent =
-forwardRef<
-    HTMLDivElement,
-    SelectContentProps
->(
+    forwardRef<
+        HTMLDivElement,
+        SelectContentProps
+    >(function SelectContent(
 
-function SelectContent(
+        {
 
-    props,
+            children,
 
-    ref,
+            ...props
 
-) {
+        },
 
-    return (
+        ref,
 
-        <MenuContent
+    ) {
 
-            ref={ref}
+        return (
 
-            {...props}
+            <MenuContent
 
-        />
+                ref={ref}
 
-    );
+                {...props}
 
-},
+            >
 
-);
+                <List>
+
+                    {children}
+
+                </List>
+
+            </MenuContent>
+
+        );
+
+    });
 
 SelectContent.displayName =
     "SelectContent";

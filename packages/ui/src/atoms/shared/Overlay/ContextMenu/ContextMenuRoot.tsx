@@ -5,7 +5,7 @@
  * ============================================================================
  */
 
-import MenuRoot from "../Menu/MenuRoot";
+import MenuRoot from "../../Navigation/Menu/MenuRoot";
 
 import type {
     ContextMenuRootProps,

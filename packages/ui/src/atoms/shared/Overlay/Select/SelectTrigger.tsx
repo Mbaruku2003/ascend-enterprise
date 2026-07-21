@@ -11,7 +11,7 @@ import {
     forwardRef,
 } from "react";
 
-import MenuTrigger from "../Menu/MenuTrigger";
+import MenuTrigger from "../../Navigation/Menu/MenuTrigger";
 
 import type {
     HTMLAttributes,

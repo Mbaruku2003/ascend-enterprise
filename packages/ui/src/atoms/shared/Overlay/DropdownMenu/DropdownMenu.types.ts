@@ -19,7 +19,7 @@ import type {
     MenuRadioGroupProps,
     MenuRadioItemProps,
     MenuSubProps,
-} from "../Menu";
+} from "../../Navigation/Menu";
 
 /* -------------------------------------------------------------------------- */
 /* Root                                                                       */

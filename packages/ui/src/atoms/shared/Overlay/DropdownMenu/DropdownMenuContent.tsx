@@ -9,10 +9,10 @@ export {
 
     default,
 
-} from "../Menu/MenuContent";
+} from "../../Navigation/Menu/MenuContent";
 
 export type {
 
     MenuContentProps as DropdownMenuContentProps,
 
-} from "../Menu";
+} from "../../Navigation/Menu";

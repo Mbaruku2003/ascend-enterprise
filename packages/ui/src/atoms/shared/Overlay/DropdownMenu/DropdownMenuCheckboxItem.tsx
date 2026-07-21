@@ -7,8 +7,8 @@
 
 export {
     default,
-} from "../Menu/MenuCheckboxItem";
+} from "../../Navigation/Menu/MenuCheckboxItem";
 
 export type {
     MenuCheckboxItemProps as DropdownMenuCheckboxItemProps,
-} from "../Menu";
+} from "../../Navigation/Menu";

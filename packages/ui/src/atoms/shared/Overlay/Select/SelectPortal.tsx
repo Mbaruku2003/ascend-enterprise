@@ -7,7 +7,7 @@
  * ============================================================================
  */
 
-import MenuPortal from "../Menu/MenuPortal";
+import MenuPortal from "../../Navigation/Menu/MenuPortal";
 
 export const SelectPortal =
     MenuPortal;

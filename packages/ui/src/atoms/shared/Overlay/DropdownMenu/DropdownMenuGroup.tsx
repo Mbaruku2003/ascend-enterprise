@@ -9,4 +9,4 @@ export {
 
     default,
 
-} from "../Menu/MenuGroup";
+} from "../../Navigation/Menu/MenuGroup";

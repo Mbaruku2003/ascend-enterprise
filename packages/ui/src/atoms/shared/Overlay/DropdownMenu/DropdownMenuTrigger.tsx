@@ -9,10 +9,10 @@ export {
 
     default,
 
-} from "../Menu/MenuTrigger";
+} from "../../Navigation/Menu/MenuTrigger";
 
 export type {
 
     MenuTriggerProps as DropdownMenuTriggerProps,
 
-} from "../Menu";
+} from "../../Navigation/Menu";

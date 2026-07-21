@@ -4,41 +4,54 @@
  * Menu
  * ----------------------------------------------------------------------------
  * File: MenuGroup.tsx
+ *
+ * Thin wrapper around the shared ListGroup primitive.
+ *
  * ============================================================================
  */
 
-import type {
-    HTMLAttributes,
+import {
+    forwardRef,
 } from "react";
 
+import type {
+    ComponentPropsWithoutRef,
+} from "react";
+
+import {
+    ListGroup,
+} from "../List";
+
 export interface MenuGroupProps
-    extends HTMLAttributes<HTMLDivElement> {}
+    extends ComponentPropsWithoutRef<
+        typeof ListGroup
+    > {}
 
-export function MenuGroup({
+export const MenuGroup =
+    forwardRef<
+        HTMLDivElement,
+        MenuGroupProps
+    >(function MenuGroup(
 
-    children,
+        props,
 
-    ...props
+        ref,
 
-}: MenuGroupProps) {
+    ) {
 
-    return (
+        return (
 
-        <div
+            <ListGroup
 
-            role="group"
+                ref={ref}
 
-            {...props}
+                {...props}
 
-        >
+            />
 
-            {children}
+        );
 
-        </div>
-
-    );
-
-}
+    });
 
 MenuGroup.displayName =
     "MenuGroup";

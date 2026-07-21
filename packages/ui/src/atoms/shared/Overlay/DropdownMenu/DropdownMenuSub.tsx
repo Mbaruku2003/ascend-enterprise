@@ -7,8 +7,8 @@
 
 export {
     default,
-} from "../Menu/MenuSub";
+} from "../../Navigation/Menu/MenuSub";
 
 export type {
     MenuSubProps as DropdownMenuSubProps,
-} from "../Menu";
+} from "../../Navigation/Menu";

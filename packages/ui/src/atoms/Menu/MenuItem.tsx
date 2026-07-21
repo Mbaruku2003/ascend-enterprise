@@ -18,9 +18,8 @@ import {
 } from "react";
 
 import {
-    cn,
-    composeRefs,
-} from "@/utils";
+    ListItem,
+} from "../shared/List";
 
 import {
     useMenuContext,
@@ -150,11 +149,9 @@ break;
 
 return (
 
-<div
+<ListItem
 
-ref={composeRefs(
-forwardedRef,
-)}
+ref={forwardedRef}
 
 role="menuitem"
 
@@ -168,53 +165,21 @@ aria-disabled={
 disabled || undefined
 }
 
-data-disabled={
+disabled={
 disabled
-? ""
-: undefined
 }
 
-className={cn(
+inset={
+inset
+}
 
-"flex",
+destructive={
+destructive
+}
 
-"cursor-default",
-
-"select-none",
-
-"items-center",
-
-"rounded-sm",
-
-"px-2",
-
-"py-1.5",
-
-"text-sm",
-
-"outline-none",
-
-"transition-colors",
-
-"focus:bg-accent",
-
-"focus:text-accent-foreground",
-
-!disabled &&
-"hover:bg-accent",
-
-disabled &&
-"pointer-events-none opacity-50",
-
-inset &&
-"pl-8",
-
-destructive &&
-"text-destructive",
-
-className,
-
-)}
+className={
+className
+}
 
 onClick={
 handleClick
@@ -230,7 +195,7 @@ handleKeyDown
 
 {children}
 
-</div>
+</ListItem>
 
 );
 
