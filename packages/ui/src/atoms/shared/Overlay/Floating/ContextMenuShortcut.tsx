@@ -7,4 +7,4 @@
 
 export {
     default,
-} from "../Menu/MenuShortcut";
+} from "../../Navigation/Menu/MenuShortcut";

@@ -7,4 +7,4 @@
 
 export {
     default,
-} from "../Menu/MenuLabel";
+} from "../../Navigation/Menu/MenuLabel";

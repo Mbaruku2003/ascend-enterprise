@@ -7,4 +7,4 @@
 
 export {
     default,
-} from "../Menu/MenuSubTrigger";
+} from "../../Navigation/Menu/MenuSubTrigger";

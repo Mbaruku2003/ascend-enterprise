@@ -7,8 +7,8 @@
 
 export {
     default,
-} from "../Menu/MenuItem";
+} from "../../Navigation/Menu/MenuItem";
 
 export type {
     MenuItemProps as ContextMenuItemProps,
-} from "../Menu";
+} from "../../Navigation/Menu";

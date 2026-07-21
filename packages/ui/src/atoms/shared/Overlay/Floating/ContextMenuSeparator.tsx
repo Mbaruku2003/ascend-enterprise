@@ -7,4 +7,4 @@
 
 export {
     default,
-} from "../Menu/MenuSeparator";
+} from "../../Navigation/Menu/MenuSeparator";
