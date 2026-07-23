@@ -35,6 +35,11 @@ export interface ComboboxOption {
     label: ReactNode;
 
     disabled?: boolean;
+    textValue?: string;
+    icon?: ReactNode;
+    description?: ReactNode;
+    group?: string;
+    metadata?: Record<string, unknown>;
 
 }
 
@@ -85,6 +90,13 @@ export interface ComboboxRootProps
     filterMode?: ComboboxFilterMode;
 
     children?: ReactNode;
+    clearable?: boolean;
+
+    emptyMessage?: ReactNode;
+
+    loading?: boolean;
+
+    loadingMessage?: ReactNode;
 
 }
 
