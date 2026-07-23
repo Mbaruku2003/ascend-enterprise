@@ -13,7 +13,6 @@
 import type {
     ButtonHTMLAttributes,
     Dispatch,
-    HTMLAttributes,
     InputHTMLAttributes,
     ReactNode,
     RefObject,
@@ -37,44 +36,40 @@ export type NumberFormatter = (
 ) => string;
 
 /* -------------------------------------------------------------------------- */
-/* Root                                                                       */
+/* Shared Configuration                                                       */
 /* -------------------------------------------------------------------------- */
 
-export interface NumberFieldProps
-    extends Omit<
-        InputProps,
-        "type" | "value" | "defaultValue" | "onChange"
-    > {
+export interface NumberFieldOptions {
 
     /**
-     * Controlled numeric value.
+     * Controlled value.
      */
     value?: number | null;
 
     /**
-     * Uncontrolled initial value.
+     * Initial uncontrolled value.
      */
     defaultValue?: number | null;
 
     /**
-     * Value change callback.
+     * Called whenever the value changes.
      */
     onValueChange?(
         value: number | null,
     ): void;
 
     /**
-     * Smallest allowed value.
+     * Minimum allowed value.
      */
     min?: number;
 
     /**
-     * Largest allowed value.
+     * Maximum allowed value.
      */
     max?: number;
 
     /**
-     * Increment/decrement amount.
+     * Increment / decrement amount.
      *
      * @default 1
      */
@@ -82,15 +77,17 @@ export interface NumberFieldProps
 
     /**
      * Decimal precision.
+     *
+     * Undefined preserves full precision.
      */
     precision?: number;
 
     /**
-     * Displays increment/decrement controls.
+     * Enables mouse wheel incrementing.
      *
-     * @default true
+     * @default false
      */
-    showControls?: boolean;
+    enableWheel?: boolean;
 
     /**
      * Custom parser.
@@ -105,12 +102,141 @@ export interface NumberFieldProps
 }
 
 /* -------------------------------------------------------------------------- */
+/* Root                                                                       */
+/* -------------------------------------------------------------------------- */
+
+export interface NumberFieldProps
+    extends Omit<
+        InputProps,
+        | "type"
+        | "value"
+        | "defaultValue"
+        | "onChange"
+    >,
+    NumberFieldOptions {
+
+    /**
+     * Displays increment/decrement controls.
+     *
+     * @default true
+     */
+    showControls?: boolean;
+
+}
+
+/* -------------------------------------------------------------------------- */
 /* Provider                                                                   */
 /* -------------------------------------------------------------------------- */
 
-export interface NumberFieldProviderProps {
+export interface NumberFieldProviderProps
+    extends NumberFieldOptions {
 
     children?: ReactNode;
+
+    /**
+     * Whether the field is disabled.
+     */
+    disabled?: boolean;
+
+    /**
+     * Whether the field is read-only.
+     */
+    readOnly?: boolean;
+
+}
+
+/* -------------------------------------------------------------------------- */
+/* Runtime State                                                              */
+/* -------------------------------------------------------------------------- */
+
+export interface NumberFieldState {
+
+    /**
+     * Current numeric value.
+     */
+    value: number | null;
+
+}
+
+/* -------------------------------------------------------------------------- */
+/* Runtime Configuration                                                      */
+/* -------------------------------------------------------------------------- */
+
+export interface NumberFieldConfiguration {
+
+    /**
+     * Minimum allowed value.
+     */
+    min?: number;
+
+    /**
+     * Maximum allowed value.
+     */
+    max?: number;
+
+    /**
+     * Increment / decrement amount.
+     */
+    step: number;
+
+    /**
+     * Decimal precision.
+     */
+    precision?: number;
+
+    /**
+     * Enables mouse wheel support.
+     */
+    enableWheel: boolean;
+
+    /**
+     * Disabled state.
+     */
+    disabled: boolean;
+
+    /**
+     * Read-only state.
+     */
+    readOnly: boolean;
+
+}
+
+/* -------------------------------------------------------------------------- */
+/* Runtime Actions                                                            */
+/* -------------------------------------------------------------------------- */
+
+export interface NumberFieldActions {
+
+    /**
+     * Increments the current value.
+     */
+    increment(): void;
+
+    /**
+     * Decrements the current value.
+     */
+    decrement(): void;
+
+    /**
+     * Clamps a value to the configured bounds.
+     */
+    clamp(
+        value: number | null,
+    ): number | null;
+
+    /**
+     * Parses a string into a numeric value.
+     */
+    parse(
+        value: string,
+    ): number | null;
+
+    /**
+     * Formats a numeric value for display.
+     */
+    format(
+        value: number | null,
+    ): string;
 
 }
 
@@ -118,55 +244,23 @@ export interface NumberFieldProviderProps {
 /* Context                                                                    */
 /* -------------------------------------------------------------------------- */
 
-export interface NumberFieldContextValue {
+export interface NumberFieldContextValue
+    extends
+        NumberFieldState,
+        NumberFieldConfiguration,
+        NumberFieldActions {
 
-    /* ---------------------------------------------------------------------- */
-    /* State                                                                  */
-    /* ---------------------------------------------------------------------- */
-
-    value: number | null;
-
-    min?: number;
-
-    max?: number;
-
-    step: number;
-
-    precision?: number;
-
-    /* ---------------------------------------------------------------------- */
-    /* Refs                                                                   */
-    /* ---------------------------------------------------------------------- */
-
+    /**
+     * Shared input reference.
+     */
     inputRef: RefObject<HTMLInputElement | null>;
 
-    /* ---------------------------------------------------------------------- */
-    /* State Setters                                                          */
-    /* ---------------------------------------------------------------------- */
-
+    /**
+     * Updates the current value.
+     */
     setValue: Dispatch<
         SetStateAction<number | null>
     >;
-
-    /* ---------------------------------------------------------------------- */
-    /* Actions                                                                */
-    /* ---------------------------------------------------------------------- */
-
-    increment(): void;
-
-    decrement(): void;
-
-    clamp(
-        value: number | null,
-    ): number | null;
-
-    parse(
-        value: string,
-    ): number | null;
-
-    format(
-        value: number | null,
-    ): string;
 
 }
 
@@ -187,6 +281,9 @@ export interface NumberInputProps
 export interface NumberIncrementProps
     extends ButtonHTMLAttributes<HTMLButtonElement> {
 
+    /**
+     * Accessible label.
+     */
     label?: string;
 
 }
@@ -198,13 +295,9 @@ export interface NumberIncrementProps
 export interface NumberDecrementProps
     extends ButtonHTMLAttributes<HTMLButtonElement> {
 
+    /**
+     * Accessible label.
+     */
     label?: string;
 
 }
-
-/* -------------------------------------------------------------------------- */
-/* Controls                                                                   */
-/* -------------------------------------------------------------------------- */
-
-export interface NumberControlsProps
-    extends HTMLAttributes<HTMLDivElement> {}
